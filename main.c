@@ -18,3 +18,41 @@ const char wardName[NUM_WARDS][30] = {
 };
 const float dailyBedRate[NUM_WARDS] = {3000.00, 6000.00, 12000.00, 25000.00};
 const int   bedCapacity[NUM_WARDS]  = {20, 10, 10, 5};
+
+void showMenu(void);
+
+int main() {
+    int choice;
+
+
+
+    do {
+        showMenu();
+        if (scanf("%d", &choice) != 1) {
+
+            while (getchar() != '\n');
+            choice = -1;
+        }
+
+
+
+        } while (choice != 5);
+
+    return 0;
+
+
+}
+void showMenu(void) {
+    printf("\n==================================================\n");
+    printf("     SMART HOSPITAL PATIENT & RESOURCE SYSTEM\n");
+    printf("==================================================\n");
+    printf("1. Register New Patient\n");
+    printf("2. View Bed Occupancy Status\n");
+    printf("3. Display Patients by Priority (Triage Order)\n");
+    printf("4. Generate Performance Report\n");
+    printf("5. Exit\n");
+    printf("--------------------------------------------------\n");
+    printf("Enter your choice: ");
+}
+
+
