@@ -278,4 +278,10 @@ int registerPatient(void) {
 
     const char *urgStr = (patientUrgency[i] == 3) ? "Level 3 (Critical)" :
                          (patientUrgency[i] == 2) ? "Level 2 (Urgent)"   :
-                                                    "Level 1 (Normal)";
+printf("Urgency Level        : %s\n", urgStr);
+    printf("Base Consultation Fee: LKR %.2f\n", patientBaseFee[i]);
+    printf("Emergency Surcharge  : LKR %.2f\n", patientSurcharge[i]);
+    printf("Ward Stay Cost (%d Days): LKR %.2f\n", patientDays[i], patientWardCost[i]);
+    printf("Gross Total Bill     : LKR %.2f\n", patientGross[i]);
+    printf("Age Subsidy Discount : LKR -%.2f\n", patientDiscount[i]);
+    printf("Final Payable Amount : LKR %.2f\n", patientFinal[i]);                                                    "Level 1 (Normal)";
