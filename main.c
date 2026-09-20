@@ -321,7 +321,7 @@ void displayAllPatients(void) {
 void sortByPriority(int order[]) {
     for (int i = 0; i < patientCount; i++) order[i] = i;
 
-    /* Selection sort: urgency DESC, then registration order ASC */
+
     for (int i = 0; i < patientCount - 1; i++) {
         int best = i;
         for (int j = i + 1; j < patientCount; j++) {
@@ -362,3 +362,32 @@ void displayPriorityOrder(void) {
     }
     printSeparator();
 }
+
+void generateReports(void) {
+    printHeader("PERFORMANCE REPORTS & ANALYTICS");
+
+    if (patientCount == 0) {
+        printf(">> No data available. Register patients first.\n");
+        return;
+    }
+
+    int c1 = 0, c2 = 0, c3 = 0;
+    float totalRevenue  = 0.0f;
+    float totalDiscount = 0.0f;
+    float highestBill   = 0.0f;
+    char  highestName[50] = "";
+
+    for (int i = 0; i < patientCount; i++) {
+        if (patientUrgency[i] == 1) c1++;
+        else if (patientUrgency[i] == 2) c2++;
+        else c3++;
+
+        totalRevenue  += patientFinal[i];
+        totalDiscount += patientDiscount[i];
+
+        if (patientFinal[i] > highestBill) {
+            highestBill = patientFinal[i];
+            strcpy(highestName, patientNames[i]);
+        }
+    }
+
