@@ -410,4 +410,14 @@ void generateReports(void) {
 
     printSeparator();
 }
+void saveBedStatus(void) {
+    FILE *fp = fopen("beds_status.txt", "w");
+    if (!fp) { printf(">> Could not save beds_status.txt\n"); return; }
 
+    for (int w = 0; w < NUM_WARDS; w++) {
+        for (int b = 0; b < BEDS_PER_WARD; b++)
+            fprintf(fp, "%d ", bedOccupancy[w][b]);
+        fprintf(fp, "\n");
+    }
+    fclose(fp);
+}
