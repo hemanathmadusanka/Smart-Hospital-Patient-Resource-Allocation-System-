@@ -421,3 +421,17 @@ void saveBedStatus(void) {
     }
     fclose(fp);
 }
+void loadBedStatus(void) {
+    FILE *fp = fopen("beds_status.txt", "r");
+    if (!fp) return;                        /* no file yet - keep zeros */
+
+    for (int w = 0; w < NUM_WARDS; w++) {
+        for (int b = 0; b < BEDS_PER_WARD; b++) {
+            if (fscanf(fp, "%d", &bedOccupancy[w][b]) != 1) {
+                fclose(fp);
+                return;
+            }
+        }
+    }
+    fclose(fp);
+}
