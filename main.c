@@ -395,3 +395,12 @@ void generateReports(void) {
     printf("    Normal   (Level 1)        : %d\n", c1);
     printf("    Urgent   (Level 2)        : %d\n", c2);
     printf("    Critical (Level 3)        : %d\n", c3);
+    printf("\n[2] FINANCIAL SUMMARY\n");
+    printf("    Total Revenue Earned      : LKR %.2f\n", totalRevenue);
+    printf("    Total Discounts Granted   : LKR %.2f\n", totalDiscount);
+
+    printf("\n[3] BED OCCUPANCY PER WARD\n");
+    for (int w = 0; w < NUM_WARDS; w++) {
+        printf("    %-18s : %.1f%%\n",
+               wardNames[w], wardOccupancyPercent(wardIDs[w]));
+    }
