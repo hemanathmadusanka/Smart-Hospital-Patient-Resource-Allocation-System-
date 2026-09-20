@@ -404,3 +404,10 @@ void generateReports(void) {
         printf("    %-18s : %.1f%%\n",
                wardNames[w], wardOccupancyPercent(wardIDs[w]));
     }
+    printf("\n[4] HIGHEST-PAYING PATIENT\n");
+    printf("    Name                      : %s\n", highestName);
+    printf("    Total Bill                : LKR %.2f\n", highestBill);
+
+    printSeparator();
+}
+
