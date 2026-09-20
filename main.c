@@ -318,3 +318,25 @@ void displayAllPatients(void) {
     }
     printSeparator();
 }
+void sortByPriority(int order[]) {
+    for (int i = 0; i < patientCount; i++) order[i] = i;
+
+    /* Selection sort: urgency DESC, then registration order ASC */
+    for (int i = 0; i < patientCount - 1; i++) {
+        int best = i;
+        for (int j = i + 1; j < patientCount; j++) {
+            int uj = patientUrgency[order[j]];
+            int ub = patientUrgency[order[best]];
+            if (uj > ub) {
+                best = j;
+            } else if (uj == ub && order[j] < order[best]) {
+                best = j;
+            }
+        }
+        if (best != i) {
+            int tmp    = order[i];
+            order[i]   = order[best];
+            order[best] = tmp;
+        }
+    }
+}
