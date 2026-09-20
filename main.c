@@ -297,3 +297,24 @@ if (patientUrgency[i] == 3 && patientWaitTime[i] == 0.0f)
     saveBedStatus();
 
     return i;
+    }
+
+
+void displayAllPatients(void) {
+    if (patientCount == 0) {
+        printf(">> No patients registered yet.\n");
+        return;
+    }
+    printHeader("ALL REGISTERED PATIENTS");
+  printf("%-10s %-20s %-5s %-10s %-22s %-10s\n",
+           "PatID", "Name", "Age", "Urgency", "Specialty", "Final(LKR)");
+    printSeparator();
+    for (int i = 0; i < patientCount; i++) {
+        const char *urg = (patientUrgency[i] == 3) ? "Critical" :
+                          (patientUrgency[i] == 2) ? "Urgent"   : "Normal";
+        printf("PAT-%-6d %-20s %-5d %-10s %-22s %-10.2f\n",
+               patientIDs[i], patientNames[i], patientAges[i], urg,
+               specialtyNames[patientSpecialty[i] - 1], patientFinal[i]);
+    }
+    printSeparator();
+}
