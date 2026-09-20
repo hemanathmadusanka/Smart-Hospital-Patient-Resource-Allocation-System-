@@ -423,7 +423,7 @@ void saveBedStatus(void) {
 }
 void loadBedStatus(void) {
     FILE *fp = fopen("beds_status.txt", "r");
-    if (!fp) return;                        /* no file yet - keep zeros */
+    if (!fp) return;
 
     for (int w = 0; w < NUM_WARDS; w++) {
         for (int b = 0; b < BEDS_PER_WARD; b++) {
@@ -464,4 +464,32 @@ void showMainMenu(void) {
     printf("  0. Exit\n");
     printSeparator();
     printf("Enter your choice: ");
+}
+int main(void) {
+    initializeSystem();
+    loadBedStatus();
+
+    int choice;
+    do {
+        showMainMenu();
+        if (scanf("%d", &choice) != 1) {
+            while (getchar() != '\n');
+            choice = -1;
+        }
+
+        switch (choice) {
+            case 1: registerPatient();      break;
+            case 2: displayAllPatients();   break;
+            case 3: displayPriorityOrder(); break;
+            case 4: generateReports();      break;
+            case 0:
+                saveBedStatus();
+                printf("\n>> Data saved. Exiting system. Goodbye!\n");
+                break;
+            default:
+                printf(">> Invalid choice. Please try again.\n");
+        }
+    } while (choice != 0);
+
+    return 0;
 }
