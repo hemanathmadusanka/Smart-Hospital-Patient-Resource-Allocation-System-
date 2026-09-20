@@ -390,4 +390,8 @@ void generateReports(void) {
             strcpy(highestName, patientNames[i]);
         }
     }
-
+  printf("\n[1] PATIENT CATEGORIES\n");
+    printf("    Total Patients Registered : %d\n", patientCount);
+    printf("    Normal   (Level 1)        : %d\n", c1);
+    printf("    Urgent   (Level 2)        : %d\n", c2);
+    printf("    Critical (Level 3)        : %d\n", c3);
