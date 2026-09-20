@@ -452,3 +452,16 @@ void appendPatientRecord(int idx) {
 
     fclose(fp);
 }
+void showMainMenu(void) {
+    printf("\n");
+    printSeparator();
+    printf("     SMART HOSPITAL & RESOURCE ALLOCATION SYSTEM\n");
+    printSeparator();
+    printf("  1. Register New Patient\n");
+    printf("  2. Display All Patients\n");
+    printf("  3. View Triage Priority Queue\n");
+    printf("  4. Generate Reports & Analytics\n");
+    printf("  0. Exit\n");
+    printSeparator();
+    printf("Enter your choice: ");
+}
