@@ -285,3 +285,15 @@ printf("Urgency Level        : %s\n", urgStr);
     printf("Gross Total Bill     : LKR %.2f\n", patientGross[i]);
     printf("Age Subsidy Discount : LKR -%.2f\n", patientDiscount[i]);
     printf("Final Payable Amount : LKR %.2f\n", patientFinal[i]);                                                    "Level 1 (Normal)";
+if (patientUrgency[i] == 3 && patientWaitTime[i] == 0.0f)
+        printf("Estimated Waiting Time: 0.00 mins (Immediate Attention)\n");
+    else
+        printf("Estimated Waiting Time: %.2f mins\n", patientWaitTime[i]);
+
+    printSeparator();
+
+
+    appendPatientRecord(i);
+    saveBedStatus();
+
+    return i;
