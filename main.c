@@ -1,13 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-
 #define NUM_SPECIALTIES 4
 #define NUM_WARDS       4
 #define BEDS_PER_WARD   20
 #define MAX_PATIENTS    100
-
 
 static const int   specialtyIDs[NUM_SPECIALTIES]     = {1, 2, 3, 4};
 static const char *specialtyNames[NUM_SPECIALTIES]   = {
@@ -31,11 +28,8 @@ static const float wardDailyRates[NUM_WARDS]         = {
     8000.0f, 10000.0f, 25000.0f, 18000.0f
 };
 
-
 static int bedOccupancy[NUM_WARDS][BEDS_PER_WARD];
 static int specialtyQueue[NUM_SPECIALTIES];
-
-
 static int   patientIDs[MAX_PATIENTS];
 static char  patientNames[MAX_PATIENTS][50];
 static int   patientAges[MAX_PATIENTS];
@@ -52,40 +46,28 @@ static float patientGross[MAX_PATIENTS];
 static float patientDiscount[MAX_PATIENTS];
 static float patientFinal[MAX_PATIENTS];
 static float patientWaitTime[MAX_PATIENTS];
-
 static int patientCount = 0;
-
-
 void  printSeparator(void);
 void  printHeader(const char *title);
 void  initializeSystem(void);
 void  showMainMenu(void);
-
-
 int   registerPatient(void);
 void  displayAllPatients(void);
 void  sortByPriority(int order[]);
 void  displayPriorityOrder(void);
 void  generateReports(void);
-
 float calcWaitingTime(int specialtyID);
 float calcEmergencySurcharge(int urgency, float baseFee);
 float calcWardCost(int days, int wardID);
 float calcGross(float baseFee, float surcharge, float wardCost);
 float calcDiscount(float gross, int age);
 float calcFinal(float gross, float discount);
-
-
 int   findFreeBed(int wardID);
 void  releaseBed(int wardID, int bedIndex);
 float wardOccupancyPercent(int wardID);
-
-
 void  saveBedStatus(void);
 void  loadBedStatus(void);
 void  appendPatientRecord(int idx);
-
-
 void printSeparator(void) {
     printf("=================================================================\n");
 }
@@ -101,7 +83,6 @@ void initializeSystem(void) {
     memset(specialtyQueue, 0, sizeof(specialtyQueue));
     patientCount = 0;
 }
-
 
 float calcWaitingTime(int specialtyID) {
     int idx = specialtyID - 1;
@@ -132,7 +113,6 @@ float calcFinal(float gross, float discount) {
     return gross - discount;
 }
 
-
 int findFreeBed(int wardID) {
     if (wardID < 1 || wardID > NUM_WARDS) return -1;
     int w = wardID - 1;
@@ -155,7 +135,6 @@ float wardOccupancyPercent(int wardID) {
         if (bedOccupancy[w][b] == 1) occupied++;
     return (occupied * 100.0f) / BEDS_PER_WARD;
 }
-
 
 int registerPatient(void) {
     if (patientCount >= MAX_PATIENTS) {
@@ -208,7 +187,6 @@ int registerPatient(void) {
     patientBaseFee[i]  = baseFees[spIdx];
     patientWaitTime[i] = calcWaitingTime(patientSpecialty[i]);
     specialtyQueue[spIdx]++;
-
 
     printf("\nAdmit to Ward? (1=Yes, 0=No): ");
     scanf("%d", &patientAdmitted[i]);
@@ -278,14 +256,16 @@ int registerPatient(void) {
 
     const char *urgStr = (patientUrgency[i] == 3) ? "Level 3 (Critical)" :
                          (patientUrgency[i] == 2) ? "Level 2 (Urgent)"   :
-printf("Urgency Level        : %s\n", urgStr);
+                                                    "Level 1 (Normal)";
+    printf("Urgency Level        : %s\n", urgStr);
     printf("Base Consultation Fee: LKR %.2f\n", patientBaseFee[i]);
     printf("Emergency Surcharge  : LKR %.2f\n", patientSurcharge[i]);
     printf("Ward Stay Cost (%d Days): LKR %.2f\n", patientDays[i], patientWardCost[i]);
     printf("Gross Total Bill     : LKR %.2f\n", patientGross[i]);
     printf("Age Subsidy Discount : LKR -%.2f\n", patientDiscount[i]);
-    printf("Final Payable Amount : LKR %.2f\n", patientFinal[i]);                                                    "Level 1 (Normal)";
-if (patientUrgency[i] == 3 && patientWaitTime[i] == 0.0f)
+    printf("Final Payable Amount : LKR %.2f\n", patientFinal[i]);
+
+    if (patientUrgency[i] == 3 && patientWaitTime[i] == 0.0f)
         printf("Estimated Waiting Time: 0.00 mins (Immediate Attention)\n");
     else
         printf("Estimated Waiting Time: %.2f mins\n", patientWaitTime[i]);
@@ -297,8 +277,7 @@ if (patientUrgency[i] == 3 && patientWaitTime[i] == 0.0f)
     saveBedStatus();
 
     return i;
-    }
-
+}
 
 void displayAllPatients(void) {
     if (patientCount == 0) {
@@ -306,7 +285,7 @@ void displayAllPatients(void) {
         return;
     }
     printHeader("ALL REGISTERED PATIENTS");
-  printf("%-10s %-20s %-5s %-10s %-22s %-10s\n",
+    printf("%-10s %-20s %-5s %-10s %-22s %-10s\n",
            "PatID", "Name", "Age", "Urgency", "Specialty", "Final(LKR)");
     printSeparator();
     for (int i = 0; i < patientCount; i++) {
@@ -318,6 +297,8 @@ void displayAllPatients(void) {
     }
     printSeparator();
 }
+
+
 void sortByPriority(int order[]) {
     for (int i = 0; i < patientCount; i++) order[i] = i;
 
@@ -340,6 +321,7 @@ void sortByPriority(int order[]) {
         }
     }
 }
+
 void displayPriorityOrder(void) {
     if (patientCount == 0) {
         printf(">> No patients registered yet.\n");
@@ -362,6 +344,7 @@ void displayPriorityOrder(void) {
     }
     printSeparator();
 }
+
 
 void generateReports(void) {
     printHeader("PERFORMANCE REPORTS & ANALYTICS");
@@ -390,11 +373,13 @@ void generateReports(void) {
             strcpy(highestName, patientNames[i]);
         }
     }
-  printf("\n[1] PATIENT CATEGORIES\n");
+
+    printf("\n[1] PATIENT CATEGORIES\n");
     printf("    Total Patients Registered : %d\n", patientCount);
     printf("    Normal   (Level 1)        : %d\n", c1);
     printf("    Urgent   (Level 2)        : %d\n", c2);
     printf("    Critical (Level 3)        : %d\n", c3);
+
     printf("\n[2] FINANCIAL SUMMARY\n");
     printf("    Total Revenue Earned      : LKR %.2f\n", totalRevenue);
     printf("    Total Discounts Granted   : LKR %.2f\n", totalDiscount);
@@ -404,12 +389,15 @@ void generateReports(void) {
         printf("    %-18s : %.1f%%\n",
                wardNames[w], wardOccupancyPercent(wardIDs[w]));
     }
+
     printf("\n[4] HIGHEST-PAYING PATIENT\n");
     printf("    Name                      : %s\n", highestName);
     printf("    Total Bill                : LKR %.2f\n", highestBill);
 
     printSeparator();
 }
+
+
 void saveBedStatus(void) {
     FILE *fp = fopen("beds_status.txt", "w");
     if (!fp) { printf(">> Could not save beds_status.txt\n"); return; }
@@ -421,10 +409,10 @@ void saveBedStatus(void) {
     }
     fclose(fp);
 }
+
 void loadBedStatus(void) {
     FILE *fp = fopen("beds_status.txt", "r");
     if (!fp) return;
-
     for (int w = 0; w < NUM_WARDS; w++) {
         for (int b = 0; b < BEDS_PER_WARD; b++) {
             if (fscanf(fp, "%d", &bedOccupancy[w][b]) != 1) {
@@ -435,6 +423,7 @@ void loadBedStatus(void) {
     }
     fclose(fp);
 }
+
 void appendPatientRecord(int idx) {
     FILE *fp = fopen("patient_records.txt", "a");
     if (!fp) { printf(">> Could not write patient_records.txt\n"); return; }
@@ -452,6 +441,7 @@ void appendPatientRecord(int idx) {
 
     fclose(fp);
 }
+
 void showMainMenu(void) {
     printf("\n");
     printSeparator();
@@ -465,6 +455,7 @@ void showMainMenu(void) {
     printSeparator();
     printf("Enter your choice: ");
 }
+
 int main(void) {
     initializeSystem();
     loadBedStatus();
