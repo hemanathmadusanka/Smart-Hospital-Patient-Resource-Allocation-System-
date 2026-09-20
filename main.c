@@ -435,3 +435,20 @@ void loadBedStatus(void) {
     }
     fclose(fp);
 }
+void appendPatientRecord(int idx) {
+    FILE *fp = fopen("patient_records.txt", "a");
+    if (!fp) { printf(">> Could not write patient_records.txt\n"); return; }
+
+    fprintf(fp,
+        "PAT-%d|%s|Age:%d|Urg:%d|Spec:%s|Ward:%s|Days:%d|"
+        "Base:%.2f|Surcharge:%.2f|WardCost:%.2f|Gross:%.2f|"
+        "Discount:%.2f|Final:%.2f|Wait:%.2f\n",
+        patientIDs[idx], patientNames[idx], patientAges[idx],
+        patientUrgency[idx], specialtyNames[patientSpecialty[idx] - 1],
+        patientAdmitted[idx] ? wardNames[patientWard[idx] - 1] : "OPD",
+        patientDays[idx], patientBaseFee[idx], patientSurcharge[idx],
+        patientWardCost[idx], patientGross[idx], patientDiscount[idx],
+        patientFinal[idx], patientWaitTime[idx]);
+
+    fclose(fp);
+}
