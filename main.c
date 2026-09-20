@@ -340,3 +340,25 @@ void sortByPriority(int order[]) {
         }
     }
 }
+void displayPriorityOrder(void) {
+    if (patientCount == 0) {
+        printf(">> No patients registered yet.\n");
+        return;
+    }
+    int order[MAX_PATIENTS];
+    sortByPriority(order);
+
+    printHeader("TRIAGE PRIORITY QUEUE (Critical -> Urgent -> Normal)");
+    printf("%-5s %-10s %-20s %-10s %-22s\n",
+           "Rank", "PatID", "Name", "Urgency", "Specialty");
+    printSeparator();
+    for (int k = 0; k < patientCount; k++) {
+        int i = order[k];
+        const char *urg = (patientUrgency[i] == 3) ? "Critical" :
+                          (patientUrgency[i] == 2) ? "Urgent"   : "Normal";
+        printf("%-5d PAT-%-6d %-20s %-10s %-22s\n",
+               k + 1, patientIDs[i], patientNames[i], urg,
+               specialtyNames[patientSpecialty[i] - 1]);
+    }
+    printSeparator();
+}
